@@ -92,12 +92,14 @@ unsigned int ItemObject::volume() const
     return _volume;
 }
 
-unsigned int ItemObject::price() const {
-	return _price;
+unsigned int ItemObject::price() const 
+{
+    return _price;
 }
 
-void ItemObject::setPrice(unsigned int price) {
-	_price = price;
+void ItemObject::setPrice(unsigned int price) 
+{
+    _price = price;
 }
 
 UI::Image* ItemObject::inventoryUi() const

@@ -447,7 +447,7 @@ uint32_t File::weight() const
 
 uint32_t File::basePrice() const
 {
-	return _basePrice;
+    return _basePrice;
 }
 
 int32_t File::perk() const

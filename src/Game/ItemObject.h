@@ -66,9 +66,9 @@ public:
     unsigned int volume() const;
     void setVolume(unsigned int volume);
 
-	// item price
-	unsigned int price() const;
-	void setPrice(unsigned int price);
+    // item price
+    unsigned int price() const;
+    void setPrice(unsigned int price);
 
     // item inventory frame ID
     int inventoryFID() const;
