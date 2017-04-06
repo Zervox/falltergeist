@@ -79,13 +79,13 @@ Object* ObjectFactory::createObject(unsigned int PID)
                     object = new ArmorItemObject();
                     for (unsigned i = (unsigned)DAMAGE::NORMAL; i != (unsigned)DAMAGE::POISON; ++i)
                     {
-                        ((ArmorItemObject*)object)->setDamageResist((DAMAGE)i, proto->damageResist()->at(i));
-                        ((ArmorItemObject*)object)->setDamageThreshold((DAMAGE)i, proto->damageThreshold()->at(i));
+                        obj->setDamageResist((DAMAGE)i, proto->damageResist()->at(i));
+						obj->setDamageThreshold((DAMAGE)i, proto->damageThreshold()->at(i));
                     }
-                    ((ArmorItemObject*)object)->setPerk(proto->perk());
-                    ((ArmorItemObject*)object)->setMaleFID(proto->armorMaleFID());
-                    ((ArmorItemObject*)object)->setFemaleFID(proto->armorFemaleFID());
-                    ((ArmorItemObject*)object)->setArmorClass(proto->armorClass());
+					obj->setPerk(proto->perk());
+					obj->setMaleFID(proto->armorMaleFID());
+					obj->setFemaleFID(proto->armorFemaleFID());
+					obj->setArmorClass(proto->armorClass());
                     break;
                 }
                 case ITEM_TYPE::CONTAINER:
@@ -111,27 +111,28 @@ Object* ObjectFactory::createObject(unsigned int PID)
                 case ITEM_TYPE::WEAPON:
                 {
                     object = new WeaponItemObject();
-
-                    ((WeaponItemObject*)object)->setPerk(proto->perk());
-                    ((WeaponItemObject*)object)->setAnimationCode(proto->weaponAnimationCode());
-                    ((WeaponItemObject*)object)->setDamageMin(proto->weaponDamageMin());
-                    ((WeaponItemObject*)object)->setDamageMax(proto->weaponDamageMax());
-                    ((WeaponItemObject*)object)->setDamageType(proto->weaponDamageType());
-                    ((WeaponItemObject*)object)->setRangePrimary(proto->weaponRangePrimary());
-                    ((WeaponItemObject*)object)->setRangeSecondary(proto->weaponRangeSecondary());
-                    ((WeaponItemObject*)object)->setMinimumStrength(proto->weaponMinimumStrenght());
-                    ((WeaponItemObject*)object)->setActionCostPrimary(proto->weaponActionCostPrimary());
-                    ((WeaponItemObject*)object)->setActionCostSecondary(proto->weaponActionCostSecondary());
-                    ((WeaponItemObject*)object)->setBurstRounds(proto->weaponBurstRounds());
-                    ((WeaponItemObject*)object)->setAmmoType(proto->weaponAmmoType());
-                    ((WeaponItemObject*)object)->setAmmoPID(proto->weaponAmmoPID());
-                    ((WeaponItemObject*)object)->setAmmoCapacity(proto->weaponAmmoCapacity());
+					auto obj = (WeaponItemObject*)object;
+                    obj->setPerk(proto->perk());
+					obj->setAnimationCode(proto->weaponAnimationCode());
+					obj->setDamageMin(proto->weaponDamageMin());
+					obj->setDamageMax(proto->weaponDamageMax());
+					obj->setDamageType(proto->weaponDamageType());
+					obj->setRangePrimary(proto->weaponRangePrimary());
+					obj->setRangeSecondary(proto->weaponRangeSecondary());
+					obj->setMinimumStrength(proto->weaponMinimumStrenght());
+					obj->setActionCostPrimary(proto->weaponActionCostPrimary());
+					obj->setActionCostSecondary(proto->weaponActionCostSecondary());
+					obj->setBurstRounds(proto->weaponBurstRounds());
+					obj->setAmmoType(proto->weaponAmmoType());
+					obj->setAmmoPID(proto->weaponAmmoPID());
+					obj->setAmmoCapacity(proto->weaponAmmoCapacity());
                     break;
                 }
             }
             ((ItemObject*)object)->setWeight(proto->weight());
             // @TODO: ((GameItemObject*)object)->setVolume(proto->containerSize());
             ((ItemObject*)object)->setInventoryFID(proto->inventoryFID());
+			((ItemObject*)object)->setPrice(proto->basePrice());
             auto msg = ResourceManager::getInstance()->msgFileType("text/english/game/pro_item.msg");
             try
             {

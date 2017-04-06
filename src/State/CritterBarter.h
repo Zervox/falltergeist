@@ -29,6 +29,11 @@
 
 namespace Falltergeist
 {
+	namespace Game
+	{
+		class CritterObject;
+		class ContainerItemObject;
+	}
     namespace State
     {
         class CritterBarter : public State
@@ -38,9 +43,22 @@ namespace Falltergeist
                 ~CritterBarter() override;
 
                 void init() override;
-
+				void onPlayerContainerDrop(Event::Event* event);
+				void onTraderContainerDrop(Event::Event* event);
+				Game::CritterObject* trader();
+				void setTrader(Game::CritterObject* trader);
                 void onBackgroundClick(Event::Mouse* event);
+				void ResetBarter();
+				void onOfferButtonClick(Event::Mouse* event);
                 void onTalkButtonClick(Event::Mouse* event);
+				void onPlayerScrollUpButtonClick(Event::Mouse* event);
+				void onPlayerScrollDownButtonClick(Event::Mouse* event);
+				void onCritterScrollUpButtonClick(Event::Mouse* event);
+				void onCritterScrollDownButtonClick(Event::Mouse* event);
+		protected:
+			Game::CritterObject* _trader = nullptr;
+			Game::ContainerItemObject* _playerContainer;
+			Game::ContainerItemObject* _traderContainer;
         };
     }
 }
