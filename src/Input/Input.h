@@ -10,18 +10,15 @@ namespace Falltergeist
 	public:
 		KeyboardInput();
 		~KeyboardInput();
-		void clear();
 		void    update(SDL_Event *event);
 		bool  AnyKey();
 		void kbeat();
 		bool   b(const int);
 		bool   bp(const int);
 		bool   br(const int);
-		SDL_Event *getEvent();
 	private:
-		std::map<int, bool> currentKey;
-		std::map<int, bool> Key;
-		SDL_Event    *_event;
+		std::map<int, bool> _currentKey;
+		std::map<int, bool> _Key;
 	};
 	extern KeyboardInput Kb;
 	// -- implementation 

@@ -173,7 +173,6 @@ void Game::run()
     Logger::info("GAME") << "Starting main loop" << std::endl;
     while (!_quit)
     {
-        Kb.clear();
         //if (_renderer->fading()) return;
         while (SDL_PollEvent(&_event)) {
             if (_event.type == SDL_QUIT)
