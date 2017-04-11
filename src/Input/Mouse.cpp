@@ -151,35 +151,35 @@ void Mouse::_setType(Cursor state)
     auto csize = cur->size();
     if (state == Cursor::SCROLL_W || state == Cursor::SCROLL_W_X) 
     {
-        cur->setOffset(0, -csize.y / 2);
+        cur->setOffset(0, -csize.height() / 2);
     }
     else if (state == Cursor::SCROLL_W || state == Cursor::SCROLL_W_X) 
     {
-        cur->setOffset(-csize.x / 2, 0);
+        cur->setOffset(-csize.width() / 2, 0);
 	}
     else if (state == Cursor::SCROLL_S || state == Cursor::SCROLL_S_X) 
     {
-        cur->setOffset(-csize.x / 2, -csize.y);
+        cur->setOffset(-csize.width() / 2, -csize.height());
     }
     else if (state == Cursor::SCROLL_E || state == Cursor::SCROLL_E_X) 
     {
-        cur->setOffset(-csize.x, -csize.y / 2);
+        cur->setOffset(-csize.width(), -csize.height() / 2);
     }
     else if (state == Cursor::SCROLL_SW || state == Cursor::SCROLL_SW_X) 
     {
-        cur->setOffset(0, -csize.y);
+        cur->setOffset(0, -csize.height());
     }
     else if (state == Cursor::SCROLL_SW || state == Cursor::SCROLL_SW_X) 
     {
-        cur->setOffset(-csize.x, 0);
+        cur->setOffset(-csize.width(), 0);
     }
     else if (state == Cursor::SCROLL_SE || state == Cursor::SCROLL_SE_X) 
     {
-        cur->setOffset(-csize.x, -csize.y);
+        cur->setOffset(-csize.width(), -csize.height());
     }
     else if (state == Cursor::HEXAGON_RED) 
     {
-        cur->setOffset(-csize.x / 2, -csize.y / 2);
+        cur->setOffset(-csize.width() / 2, -csize.height() / 2);
     }
     else if (state == Cursor::SMALL_DOWN_ARROW) 
     {
@@ -191,7 +191,7 @@ void Mouse::_setType(Cursor state)
     }
 	else if (state == Cursor::WAIT)
 	{
-		cur->setOffset(VecI2() - csize / 2);
+		cur->setOffset(Point() - csize / 2);
     }
 }
 
