@@ -111,7 +111,6 @@ namespace Falltergeist
                 void onBackgroundClick(Event::Mouse* event);
                 void onObjectMouseEvent(Event::Mouse* event, Game::Object* object);
                 void onObjectHover(Event::Mouse* event, Game::Object* object);
-                void onKeyDown(Event::Keyboard* event) override;
                 void onMouseUp(Event::Mouse* event);
                 void onMouseDown(Event::Mouse* event);
                 void onMouseMove(Event::Mouse* event);

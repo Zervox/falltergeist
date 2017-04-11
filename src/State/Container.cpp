@@ -86,6 +86,15 @@ namespace Falltergeist
 
         }
 
+        void Container::think() 
+        {
+            State::think();
+            if (Kb.bp(SDLK_ESCAPE))
+            {
+                Game::getInstance()->popState();
+            }
+        }
+
         Game::ContainerItemObject* Container::object()
         {
             return _object;
@@ -109,14 +118,6 @@ namespace Falltergeist
         void Container::onStateDeactivate(Event::State* event)
         {
             Game::getInstance()->mouse()->popState();
-        }
-
-        void Container::onKeyDown(Event::Keyboard* event)
-        {
-            if (event->keyCode() == SDLK_ESCAPE)
-            {
-                Game::getInstance()->popState();
-            }
         }
     }
 }

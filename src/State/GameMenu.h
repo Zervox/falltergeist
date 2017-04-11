@@ -38,6 +38,7 @@ namespace Falltergeist
                 ~GameMenu() override;
 
                 void init() override;
+				void think() override;
 
                 void doSaveGame();
                 void doLoadGame();
@@ -45,7 +46,6 @@ namespace Falltergeist
                 void doExit();
                 void closeMenu();
 
-                void onKeyDown(Event::Keyboard* event) override;
                 void onStateActivate(Event::State* event) override;
                 void onStateDeactivate(Event::State* event) override;
         };

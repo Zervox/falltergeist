@@ -128,6 +128,31 @@ namespace Falltergeist
             addUI(doneButtonLabel);
         }
 
+        void GameMenu::think() 
+        {
+            State::think();
+            if (Kb.bp(SDLK_ESCAPE) || Kb.bp(SDLK_o)) 
+            {
+                closeMenu();
+            }
+            if (Kb.bp(SDLK_s)) 
+            {
+                doSaveGame();
+            }
+            if (Kb.bp(SDLK_l)) 
+            {
+                doLoadGame();
+            }
+            if (Kb.bp(SDLK_p)) 
+            {
+                doPreferences();
+            }
+            if (Kb.bp(SDLK_e)) 
+            {
+                doExit();
+            }
+        }
+
         void GameMenu::doSaveGame()
         {
             Game::getInstance()->pushState(new SaveGame());
@@ -161,29 +186,6 @@ namespace Falltergeist
         void GameMenu::onStateDeactivate(Event::State* event)
         {
             Game::getInstance()->mouse()->popState();
-        }
-
-        void GameMenu::onKeyDown(Event::Keyboard* event)
-        {
-            switch (event->keyCode())
-            {
-                case SDLK_ESCAPE:
-                case SDLK_d:
-                    closeMenu();
-                    break;
-                case SDLK_s:
-                    doSaveGame();
-                    break;
-                case SDLK_l:
-                    doLoadGame();
-                    break;
-                case SDLK_p:
-                    doPreferences();
-                    break;
-                case SDLK_e:
-                    doExit();
-                    break;
-            }
         }
     }
 }

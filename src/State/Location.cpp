@@ -806,6 +806,80 @@ namespace Falltergeist
             }
 
             State::think();
+            if (Kb.bp(SDLK_m))
+            {
+                toggleCursorMode();
+            }
+            if (Kb.bp(SDLK_COMMA))
+            {
+                auto player = Game::getInstance()->player();
+                player->setOrientation(player->orientation() + 5); // rotate left
+            }
+            if (Kb.bp(SDLK_PERIOD))
+            {
+                auto player = Game::getInstance()->player();
+                player->setOrientation(player->orientation() + 1); // rotate right
+            }
+            if (Kb.bp(SDLK_HOME))
+            {
+                centerCameraAtHexagon(Game::getInstance()->player()->hexagon());
+            }
+            if (Kb.bp(SDLK_KP_PLUS) || Kb.bp(SDLK_PLUS))
+            {
+                // @TODO: increase brightness
+            }
+            if (Kb.bp(SDLK_KP_MINUS) || Kb.bp(SDLK_MINUS))
+            {
+                // @TODO: decrease brightness
+            }
+            if (Kb.bp(SDLK_KP_1))
+            {
+                // @TODO: use skill: sneak
+            }
+            if (Kb.bp(SDLK_KP_2))
+            {
+                // @TODO: use skill: lockpick
+            }
+            if (Kb.bp(SDLK_KP_3))
+            {
+                // @TODO: use skill: steal
+            }
+            if (Kb.bp(SDLK_KP_4))
+            {
+                // @TODO: use skill: traps
+            }
+            if (Kb.bp(SDLK_KP_5))
+            {
+                // @TODO: use skill: first aid
+            }
+            if (Kb.bp(SDLK_KP_6))
+            {
+                // @TODO: use skill: doctor
+            }
+            if (Kb.bp(SDLK_KP_7))
+            {
+                // @TODO: use skill: science
+            }
+            if (Kb.bp(SDLK_KP_8))
+            {
+                // @TODO: use skill: repair
+            }
+            if (Kb.b(SDLK_LEFT))
+            {
+                _camera->setCenter(_camera->center() + VecI2(-KEYBOARD_SCROLL_STEP, 0));
+            }
+            if (Kb.b(SDLK_RIGHT))
+            {
+                _camera->setCenter(_camera->center() + VecI2(KEYBOARD_SCROLL_STEP, 0));
+            }
+            if (Kb.b(SDLK_UP))
+            {
+                _camera->setCenter(_camera->center() + VecI2(0, -KEYBOARD_SCROLL_STEP));
+            }
+            if (Kb.b(SDLK_DOWN))
+            {
+                _camera->setCenter(_camera->center() + VecI2(0, KEYBOARD_SCROLL_STEP));
+            }
         }
 
         void Location::toggleCursorMode()
@@ -1008,76 +1082,6 @@ namespace Falltergeist
                 _hexagonInfo->setText("No hex");
             }
         }
-
-        void Location::onKeyDown(Event::Keyboard* event)
-        {
-            switch (event->keyCode())
-            {
-                case SDLK_m:
-                    toggleCursorMode();
-                    break;
-                case SDLK_COMMA:
-                {
-                    auto player = Game::getInstance()->player();
-                    player->setOrientation(player->orientation() + 5); // rotate left
-                    break;
-                }
-                case SDLK_PERIOD:
-                {
-                    auto player = Game::getInstance()->player();
-                    player->setOrientation(player->orientation() + 1); // rotate right
-                    break;
-                }
-                case SDLK_HOME:
-                    centerCameraAtHexagon(Game::getInstance()->player()->hexagon());
-                    break;
-                case SDLK_PLUS:
-                case SDLK_KP_PLUS:
-                    // @TODO: increase brightness
-                    break;
-                case SDLK_MINUS:
-                case SDLK_KP_MINUS:
-                    // @TODO: decrease brightness
-                    break;
-                case SDLK_1:
-                    // @TODO: use skill: sneak
-                    break;
-                case SDLK_2:
-                    // @TODO: use skill: lockpick
-                    break;
-                case SDLK_3:
-                    // @TODO: use skill: steal
-                    break;
-                case SDLK_4:
-                    // @TODO: use skill: traps
-                    break;
-                case SDLK_5:
-                    // @TODO: use skill: first aid
-                    break;
-                case SDLK_6:
-                    // @TODO: use skill: doctor
-                    break;
-                case SDLK_7:
-                    // @TODO: use skill: science
-                    break;
-                case SDLK_8:
-                    // @TODO: use skill: repair
-                    break;
-                case SDLK_LEFT:
-                    _camera->setCenter(_camera->center() + Point(-KEYBOARD_SCROLL_STEP, 0));
-                    break;
-                case SDLK_RIGHT:
-                    _camera->setCenter(_camera->center() + Point(KEYBOARD_SCROLL_STEP, 0));
-                    break;
-                case SDLK_UP:
-                    _camera->setCenter(_camera->center() + Point(0, -KEYBOARD_SCROLL_STEP));
-                    break;
-                case SDLK_DOWN:
-                    _camera->setCenter(_camera->center() + Point(0, KEYBOARD_SCROLL_STEP));
-                    break;
-            }
-        }
-
 
         LocationCamera* Location::camera()
         {

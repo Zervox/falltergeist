@@ -47,7 +47,7 @@ namespace Falltergeist
                 ~Container() override;
 
                 void init() override;
-
+				virtual void think() override;
                 Game::ContainerItemObject* object();
                 void setObject(Game::ContainerItemObject* object);
 
@@ -55,7 +55,6 @@ namespace Falltergeist
 
                 void onStateActivate(Event::State* event) override;
                 void onStateDeactivate(Event::State* event) override;
-                void onKeyDown(Event::Keyboard* event) override;
 
             protected:
                 Game::ContainerItemObject* _object = nullptr;

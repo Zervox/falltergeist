@@ -122,7 +122,6 @@ namespace Falltergeist
 
                 virtual void onStateActivate(Event::State* event);
                 virtual void onStateDeactivate(Event::State* event);
-                virtual void onKeyDown(Event::Keyboard* event);
 
                 /**
                  * Invoked when state becomes active to receive events (when first pushed and after other modal states are removed from "above").
@@ -144,8 +143,6 @@ namespace Falltergeist
                  * Invoked when Renderer has finished fadein/fadeout process.
                  */
                 Event::StateHandler& fadeDoneHandler();
-                Event::KeyboardHandler& keyDownHandler();
-                Event::KeyboardHandler& keyUpHandler();
 
                 void scriptFade(VM::Script* script, bool in);
 
@@ -164,7 +161,6 @@ namespace Falltergeist
                 bool _initialized = false;
 
                 Event::StateHandler _activateHandler, _deactivateHandler, _fadeDoneHandler, _pushHandler, _popHandler;
-                Event::KeyboardHandler _keyDownHandler, _keyUpHandler;
         };
     }
 }

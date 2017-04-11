@@ -26,7 +26,6 @@
 // Falltergeist includes
 #include "../Event/Dispatcher.h"
 #include "../Event/Event.h"
-#include "../Event/Keyboard.h"
 #include "../Event/Mouse.h"
 #include "../Event/State.h"
 
@@ -60,7 +59,6 @@ namespace Falltergeist
         // this was necessary to decouple EventDispatcher from the rest of the classes
         template void EventTarget::emitEvent<Event>(std::unique_ptr<Event>, const Base::Delegate<Event*>&);
         template void EventTarget::emitEvent<Mouse>(std::unique_ptr<Mouse>, const Base::Delegate<Mouse*>&);
-        template void EventTarget::emitEvent<Keyboard>(std::unique_ptr<Keyboard>, const Base::Delegate<Keyboard*>&);
         template void EventTarget::emitEvent<State>(std::unique_ptr<State>, const Base::Delegate<State*>&);
     }
 }

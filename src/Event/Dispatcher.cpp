@@ -29,7 +29,6 @@
 // Falltergeist includes
 #include "../Event/EventTarget.h"
 #include "../Event/Event.h"
-#include "../Event/Keyboard.h"
 #include "../Event/Mouse.h"
 #include "../Event/State.h"
 
@@ -101,7 +100,6 @@ namespace Falltergeist
         // instantiations for all event types..
         template void Dispatcher::scheduleEvent<Event>(EventTarget*, std::unique_ptr<Event>, Base::Delegate<Event*>);
         template void Dispatcher::scheduleEvent<Mouse>(EventTarget*, std::unique_ptr<Mouse>, Base::Delegate<Mouse*>);
-        template void Dispatcher::scheduleEvent<Keyboard>(EventTarget*, std::unique_ptr<Keyboard>, Base::Delegate<Keyboard*>);
         template void Dispatcher::scheduleEvent<State>(EventTarget*, std::unique_ptr<State>, Base::Delegate<State*>);
     }
 }

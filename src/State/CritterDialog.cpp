@@ -48,6 +48,11 @@ namespace Falltergeist
 {
     namespace State
     {
+       static std::map<uint32_t, uint32_t> numkeys = {
+            { SDLK_1,0 },{ SDLK_2, 1 },{ SDLK_3, 2 },{ SDLK_4, 3 },{ SDLK_5, 4 } ,{ SDLK_6, 5 },{ SDLK_7, 6 } ,{ SDLK_8, 7 } ,{ SDLK_9, 8 } ,
+            { SDLK_KP_1,0 },{ SDLK_KP_2, 1 },{ SDLK_KP_3, 2 },{ SDLK_KP_4, 3 },{ SDLK_KP_5, 4 } ,{ SDLK_KP_6, 5 },{ SDLK_KP_7, 6 } ,{ SDLK_KP_8, 7 } ,{ SDLK_KP_9, 8 }
+       };
+
         CritterDialog::CritterDialog() : State()
         {
         }
@@ -128,6 +133,30 @@ namespace Falltergeist
         void CritterDialog::think()
         {
             State::think();
+            if (Kb.bp(SDLK_0) || Kb.bp(SDLK_KP_0))
+            {
+                // Todo: end dialog
+                return;
+            }
+            for (auto v : numkeys) 
+            {
+                if (Kb.bp(v.first)) 
+                {
+                    // If numpad key
+                   if (v.second < _answers.size()) _selectAnswer(v.second);
+                   break;
+                }
+            }
+
+            auto question = dynamic_cast<UI::TextArea*>(getUI("question"));
+            if (Kb.bp(SDLK_UP) && question->lineOffset() > 0)
+            {
+                question->setLineOffset(question->lineOffset() - 4);
+            }
+            else if (Kb.bp(SDLK_DOWN) && question->lineOffset() < question->numLines() - 4)
+            {
+                question->setLineOffset(question->lineOffset() + 4);
+            }
         }
 
         // TODO: add auto-text scrolling after 10 seconds (when it's longer than 4 lines)
@@ -189,45 +218,6 @@ namespace Falltergeist
             if (auto interact = dynamic_cast<CritterInteract*>(Game::getInstance()->topState(1)))
             {
                 interact->switchSubState(CritterInteract::SubState::BARTER);
-            }
-        }
-
-        void CritterDialog::onKeyDown(Event::Keyboard* event)
-        {
-            static std::vector<uint32_t> numkeys = {
-                    SDLK_1, SDLK_2, SDLK_3, SDLK_4, SDLK_5, SDLK_6, SDLK_7, SDLK_8, SDLK_9,
-                    SDLK_KP_1, SDLK_KP_2, SDLK_KP_3, SDLK_KP_4, SDLK_KP_5, SDLK_KP_6, SDLK_KP_7, SDLK_KP_8, SDLK_KP_9,
-            };
-
-            auto key = event->keyCode();
-
-            if (key == SDLK_0 || key == SDLK_KP_0)
-            {
-                // Todo: end dialog
-                return;
-            }
-
-            auto keyIt = std::find(numkeys.begin(), numkeys.end(), key);
-            // Number key pressed
-            if (keyIt != numkeys.end())
-            {
-                size_t keyOffset = keyIt - numkeys.begin();
-
-                // If numpad key
-                if (keyOffset > 8) keyOffset -= 9;
-
-                if (keyOffset < _answers.size()) _selectAnswer(keyOffset);
-                return;
-            }
-
-            auto question = dynamic_cast<UI::TextArea*>(getUI("question"));
-            if (key == SDLK_UP && question->lineOffset() > 0)
-            {
-                question->setLineOffset(question->lineOffset() - 4);
-            }
-            else if (key == SDLK_DOWN && question->lineOffset() < question->numLines() - 4)
-            {
-                question->setLineOffset(question->lineOffset() + 4);
             }
         }
 

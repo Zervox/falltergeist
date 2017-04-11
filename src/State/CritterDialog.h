@@ -63,7 +63,6 @@ namespace Falltergeist
                 void onAnswerIn(Event::Mouse* event);
                 void onAnswerOut(Event::Mouse* event);
                 void onAnswerClick(Event::Mouse* event);
-                void onKeyDown(Event::Keyboard* event) override;
 
             protected:
                 std::vector<int> _functions;

@@ -44,6 +44,7 @@ namespace Falltergeist
                 ~LoadGame() override;
 
                 void init() override;
+				void think() override;
 
                 void onDoneButtonClick(Event::Mouse* event);
                 void doCancel();
@@ -51,7 +52,6 @@ namespace Falltergeist
 
                 void onStateActivate(Event::State* event) override;
                 void onStateDeactivate(Event::State* event) override;
-                void onKeyDown(Event::Keyboard* event) override;
         };
     }
 }

@@ -108,18 +108,12 @@ namespace Falltergeist
             Game::getInstance()->popState();
         }
 
-        void ExitConfirm::onKeyDown(Event::Keyboard* event)
-        {
-            switch (event->keyCode())
-            {
-                case SDLK_ESCAPE:
-                case SDLK_n:
-                    doNo();
-                    break;
-                case SDLK_RETURN:
-                case SDLK_y:
-                    doYes();
-                    break;
+        void ExitConfirm::think() {
+            if (Kb.bp(SDLK_y)|| Kb.bp(SDLK_RETURN)) {
+                doYes();
+            }
+            if (Kb.bp(SDLK_n)|| Kb.bp(SDLK_ESCAPE)) {
+                doNo();
             }
         }
 

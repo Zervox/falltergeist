@@ -110,6 +110,14 @@ namespace Falltergeist
             addUI(cancelButtonLabel);
         }
 
+        void LoadGame::think() 
+        {
+            if (Kb.bp(SDLK_ESCAPE)) 
+            {
+                doCancel();
+            }
+        }
+
         void LoadGame::onDoneButtonClick(Event::Mouse* event)
         {
             Game::getInstance()->popState();
@@ -145,16 +153,6 @@ namespace Falltergeist
         void LoadGame::onStateDeactivate(Event::State* event)
         {
             Game::getInstance()->mouse()->popState();
-        }
-
-        void LoadGame::onKeyDown(Event::Keyboard* event)
-        {
-            switch (event->keyCode())
-            {
-                case SDLK_ESCAPE:
-                    doCancel();
-                    break;
-            }
         }
     }
 }

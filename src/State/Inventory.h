@@ -42,6 +42,7 @@ namespace Falltergeist
                 ~Inventory() override;
 
                 void init() override;
+                void think() override;
 
                 void onDoneButtonClick(Event::Mouse* event);
                 void onScrollUpButtonClick(Event::Mouse* event);
@@ -55,7 +56,6 @@ namespace Falltergeist
                 //void onSlotMouseUp(Event::Mouse* event);
                 //void onSlotDrag(Event::Mouse* event);
                 void backgroundRightClick(Event::Mouse* event);
-                void onKeyDown(Event::Keyboard* event) override;
                 void onInventoryModified();
 
             private:

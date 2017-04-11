@@ -308,6 +308,15 @@ namespace Falltergeist
             inventoryList->itemsListModifiedHandler().add([this](Event::Event* event){ this->onInventoryModified(); });
         }
 
+        void Inventory::think()
+        {
+            State::think();
+            if (Kb.bp(SDLK_ESCAPE) || Kb.bp(SDLK_i)) 
+            {
+                Game::getInstance()->popState();
+            }
+        }
+
         void Inventory::onDoneButtonClick(Event::Mouse* event)
         {
             Game::getInstance()->popState();
@@ -537,16 +546,6 @@ namespace Falltergeist
             weightMaxLabel->setVisible(PID == 0);
             leftHandLabel->setVisible(PID == 0);
             rightHandLabel->setVisible(PID == 0);
-        }
-
-        void Inventory::onKeyDown(Event::Keyboard* event)
-        {
-            switch (event->keyCode())
-            {
-                case SDLK_ESCAPE:
-                    Game::getInstance()->popState();
-                    break;
-            }
         }
     }
 }

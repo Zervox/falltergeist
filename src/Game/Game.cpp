@@ -171,15 +171,33 @@ void Game::setState(State::State* state)
 void Game::run()
 {
     Logger::info("GAME") << "Starting main loop" << std::endl;
-    _frame = 0;
     while (!_quit)
     {
-        handle();
+        Kb.clear();
+        //if (_renderer->fading()) return;
+        while (SDL_PollEvent(&_event)) {
+            if (_event.type == SDL_QUIT)
+            {
+               _quit = true;
+                break;
+            }
+            else
+            {
+                Kb.update(&_event);
+                auto event = _createEventFromSDL(_event);
+
+                if (event)
+                {
+                    for (auto state : _getActiveStates()) state->handle(event.get());
+                }
+            }
+            // process events generate during handle()
+            _eventDispatcher->processScheduledEvents();
+        }
         think();
         render();
         SDL_Delay(1);
-        _statesForDelete.clear();
-        _frame++;
+       _statesForDelete.clear();
     }
     Logger::info("GAME") << "Stopping main loop" << std::endl;
 }
@@ -323,7 +341,6 @@ Settings* Game::settings() const
 std::unique_ptr<Event::Event> Game::_createEventFromSDL(const SDL_Event& sdlEvent)
 {
     using Mouse = Event::Mouse;
-    using Keyboard = Event::Keyboard;
     switch (sdlEvent.type)
     {
         case SDL_MOUSEBUTTONDOWN:
@@ -362,55 +379,8 @@ std::unique_ptr<Event::Event> Game::_createEventFromSDL(const SDL_Event& sdlEven
             mouseEvent->setOffset({sdlEvent.motion.xrel,sdlEvent.motion.yrel});
             return std::move(mouseEvent);
         }
-        case SDL_KEYDOWN:
-        {
-            auto keyboardEvent = std::make_unique<Event::Keyboard>(Keyboard::Type::KEY_DOWN);
-            keyboardEvent->setKeyCode(sdlEvent.key.keysym.sym);
-            keyboardEvent->setAltPressed(sdlEvent.key.keysym.mod & KMOD_ALT);
-            keyboardEvent->setShiftPressed(sdlEvent.key.keysym.mod & KMOD_SHIFT);
-            keyboardEvent->setControlPressed(sdlEvent.key.keysym.mod & KMOD_CTRL);
-            return std::move(keyboardEvent);
-        }
-        case SDL_KEYUP:
-        {
-            auto keyboardEvent = std::make_unique<Event::Keyboard>(Keyboard::Type::KEY_UP);
-            keyboardEvent->setKeyCode(sdlEvent.key.keysym.sym);
-            keyboardEvent->setAltPressed(sdlEvent.key.keysym.mod & KMOD_ALT);
-            keyboardEvent->setShiftPressed(sdlEvent.key.keysym.mod & KMOD_SHIFT);
-            keyboardEvent->setControlPressed(sdlEvent.key.keysym.mod & KMOD_CTRL);;
-
-            // TODO: maybe we should make Game an EventTarget too?
-            if (keyboardEvent->keyCode() == SDLK_F12)
-            {
-                renderer()->screenshot();
-            }
-            return std::move(keyboardEvent);
-        }
     }
     return std::unique_ptr<Event::Event>();
-}
-
-void Game::handle()
-{
-    if (_renderer->fading()) return;
-
-    while (SDL_PollEvent(&_event))
-    {
-        if (_event.type == SDL_QUIT)
-        {
-            _quit = true;
-        }
-        else
-        {
-            auto event = _createEventFromSDL(_event);
-            if (event)
-            {
-                for (auto state : _getActiveStates()) state->handle(event.get());
-            }
-        }
-        // process events generate during handle()
-        _eventDispatcher->processScheduledEvents();
-    }
 }
 
 void Game::think()
@@ -490,9 +460,5 @@ Event::Dispatcher* Game::eventDispatcher()
     return _eventDispatcher.get();
 }
 
-unsigned int Game::frame() const
-{
-    return _frame;
-}
 }
 }

@@ -146,6 +146,11 @@ namespace Falltergeist
                     this->onCreditsFinished();
                 }
             }
+
+            if (Kb.AnyKey())
+            {
+                this->onCreditsFinished();
+            }
         }
 
 
@@ -154,14 +159,6 @@ namespace Falltergeist
             if (auto mouseEvent = dynamic_cast<Event::Mouse*>(event))
             {
                 if (mouseEvent->name() == "mouseup")
-                {
-                    this->onCreditsFinished();
-                }
-            }
-
-            if (auto keyboardEvent = dynamic_cast<Event::Keyboard*>(event))
-            {
-                if (keyboardEvent->name() == "keyup")
                 {
                     this->onCreditsFinished();
                 }

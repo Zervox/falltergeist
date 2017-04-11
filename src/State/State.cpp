@@ -42,8 +42,6 @@ namespace Falltergeist
         {
             activateHandler().add([this](Event::State* event){ this->onStateActivate(event); });
             deactivateHandler().add([this](Event::State* event){ this->onStateDeactivate(event); });
-
-            keyDownHandler().add([this](Event::Keyboard* event) { this->onKeyDown(event); });
         }
 
         State::~State()
@@ -170,23 +168,6 @@ namespace Falltergeist
         void State::handle(Event::Event* event)
         {
             if (event->handled()) return;
-            // TODO: maybe make handle() a template function to get rid of dynamic_casts?
-            if (auto keyboardEvent = dynamic_cast<Event::Keyboard*>(event))
-            {
-                switch (keyboardEvent->originalType())
-                {
-                    case Event::Keyboard::Type::KEY_UP:
-                    {
-                        emitEvent(std::make_unique<Event::Keyboard>(*keyboardEvent), keyUpHandler());
-                        break;
-                    }
-                    case Event::Keyboard::Type::KEY_DOWN:
-                    {
-                        emitEvent(std::make_unique<Event::Keyboard>(*keyboardEvent), keyDownHandler());
-                        break;
-                    }
-                }
-            }
             for (auto it = _ui.rbegin(); it != _ui.rend(); ++it)
             {
                 if (event->handled()) return;
@@ -218,10 +199,6 @@ namespace Falltergeist
         }
 
         void State::onStateDeactivate(Event::State* event)
-        {
-        }
-
-        void State::onKeyDown(Event::Keyboard* event)
         {
         }
 
@@ -258,16 +235,6 @@ namespace Falltergeist
         Event::StateHandler& State::fadeDoneHandler()
         {
             return _fadeDoneHandler;
-        }
-
-        Event::KeyboardHandler& State::keyDownHandler()
-        {
-            return _keyDownHandler;
-        }
-
-        Event::KeyboardHandler& State::keyUpHandler()
-        {
-            return _keyUpHandler;
         }
 
 
