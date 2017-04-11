@@ -153,7 +153,7 @@ void Mouse::_setType(Cursor state)
     {
         cur->setOffset(0, -csize.height() / 2);
     }
-    else if (state == Cursor::SCROLL_W || state == Cursor::SCROLL_W_X) 
+    else if (state == Cursor::SCROLL_N || state == Cursor::SCROLL_N_X) 
     {
         cur->setOffset(-csize.width() / 2, 0);
 	}
@@ -169,7 +169,7 @@ void Mouse::_setType(Cursor state)
     {
         cur->setOffset(0, -csize.height());
     }
-    else if (state == Cursor::SCROLL_SW || state == Cursor::SCROLL_SW_X) 
+    else if (state == Cursor::SCROLL_NE || state == Cursor::SCROLL_NE_X) 
     {
         cur->setOffset(-csize.width(), 0);
     }
