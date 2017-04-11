@@ -45,6 +45,33 @@ namespace Input
 Mouse::Mouse()
 {
     SDL_ShowCursor(0); // Hide cursor
+    _ui.insert(std::make_pair(Cursor::BIG_ARROW, std::make_unique<UI::Image>("art/intrface/stdarrow.frm")));
+    _ui.insert(std::make_pair(Cursor::SCROLL_W, std::make_unique<UI::Image>("art/intrface/scrwest.frm")));
+    _ui.insert(std::make_pair(Cursor::SCROLL_W_X, std::make_unique<UI::Image>("art/intrface/scrwx.frm")));
+    _ui.insert(std::make_pair(Cursor::SCROLL_N, std::make_unique<UI::Image>("art/intrface/scrnorth.frm")));
+    _ui.insert(std::make_pair(Cursor::SCROLL_N_X, std::make_unique<UI::Image>("art/intrface/scrnx.frm")));
+    _ui.insert(std::make_pair(Cursor::SCROLL_S, std::make_unique<UI::Image>("art/intrface/scrsouth.frm")));
+    _ui.insert(std::make_pair(Cursor::SCROLL_S_X, std::make_unique<UI::Image>("art/intrface/scrsx.frm")));
+    _ui.insert(std::make_pair(Cursor::SCROLL_E, std::make_unique<UI::Image>("art/intrface/screast.frm")));
+    _ui.insert(std::make_pair(Cursor::SCROLL_E_X, std::make_unique<UI::Image>("art/intrface/screx.frm")));
+    _ui.insert(std::make_pair(Cursor::SCROLL_NW, std::make_unique<UI::Image>("art/intrface/scrnwest.frm")));
+    _ui.insert(std::make_pair(Cursor::SCROLL_NW_X, std::make_unique<UI::Image>("art/intrface/scrnwx.frm")));
+    _ui.insert(std::make_pair(Cursor::SCROLL_SW, std::make_unique<UI::Image>("art/intrface/scrswest.frm")));
+    _ui.insert(std::make_pair(Cursor::SCROLL_SW_X, std::make_unique<UI::Image>("art/intrface/scrswx.frm")));
+    _ui.insert(std::make_pair(Cursor::SCROLL_NE, std::make_unique<UI::Image>("art/intrface/scrneast.frm")));
+    _ui.insert(std::make_pair(Cursor::SCROLL_NE_X, std::make_unique<UI::Image>("art/intrface/scrnex.frm")));
+    _ui.insert(std::make_pair(Cursor::SCROLL_SE, std::make_unique<UI::Image>("art/intrface/scrseast.frm")));
+    _ui.insert(std::make_pair(Cursor::SCROLL_SE_X, std::make_unique<UI::Image>("art/intrface/scrsex.frm")));
+    _ui.insert(std::make_pair(Cursor::HEXAGON_RED, std::make_unique<UI::Image>("art/intrface/msef000.frm")));
+    _ui.insert(std::make_pair(Cursor::ACTION, std::make_unique<UI::Image>("art/intrface/actarrow.frm")));
+    _ui.insert(std::make_pair(Cursor::HAND, std::make_unique<UI::Image>("art/intrface/hand.frm")));
+    _ui.insert(std::make_pair(Cursor::SMALL_DOWN_ARROW, std::make_unique<UI::Image>("art/intrface/sdnarrow.frm")));
+    _ui.insert(std::make_pair(Cursor::SMALL_UP_ARROW, std::make_unique<UI::Image>("art/intrface/suparrow.frm")));
+    auto queue = std::make_unique<UI::AnimationQueue>();
+    queue->animations().push_back(std::make_unique<UI::Animation>("art/intrface/wait.frm"));
+    queue->setRepeat(true);
+    queue->start();
+    _ui.insert(std::make_pair(Cursor::WAIT, std::move(queue)));
 }
 
 Mouse::~Mouse()
@@ -114,116 +141,57 @@ void Mouse::pushState(Cursor state)
 
 Mouse::Cursor Mouse::state() const
 {
-    if (_states.empty())
-    {
-        return Cursor::NONE;
-    }
-    return _states.back();
+    return _states.empty() ? Cursor::NONE : _states.back();
 }
 
 void Mouse::_setType(Cursor state)
 {
-    if (this->state() == state) return;
-    _ui.reset(nullptr);
-    switch (state)
+    if (this->state() == state || state == Cursor::NONE) return;
+    auto cur = _ui.find(state)->second.get();
+    auto csize = cur->size();
+    if (state == Cursor::SCROLL_W || state == Cursor::SCROLL_W_X) 
     {
-        case Cursor::BIG_ARROW:
-            _ui = std::make_unique<UI::Image>("art/intrface/stdarrow.frm");
-            break;
-        case Cursor::SCROLL_W:
-            _ui = std::make_unique<UI::Image>("art/intrface/scrwest.frm");
-            _ui->setOffset(0, -_ui->size().height() / 2);
-            break;
-        case Cursor::SCROLL_W_X:
-            _ui = std::make_unique<UI::Image>("art/intrface/scrwx.frm");
-            _ui->setOffset(0, -_ui->size().height() / 2);
-            break;
-        case Cursor::SCROLL_N:
-            _ui = std::make_unique<UI::Image>("art/intrface/scrnorth.frm");
-            _ui->setOffset( -_ui->size().width() / 2, 0);
-            break;
-        case Cursor::SCROLL_N_X:
-            _ui = std::make_unique<UI::Image>("art/intrface/scrnx.frm");
-            _ui->setOffset( -_ui->size().width() / 2, 0);
-            break;
-        case Cursor::SCROLL_S:
-            _ui = std::make_unique<UI::Image>("art/intrface/scrsouth.frm");
-            _ui->setOffset( -_ui->size().width() / 2, -_ui->size().height());
-            break;
-        case Cursor::SCROLL_S_X:
-            _ui = std::make_unique<UI::Image>("art/intrface/scrsx.frm");
-            _ui->setOffset(-_ui->size().width() / 2, -_ui->size().height());
-            break;
-        case Cursor::SCROLL_E:
-            _ui = std::make_unique<UI::Image>("art/intrface/screast.frm");
-            _ui->setOffset( -_ui->size().width(), -_ui->size().height() / 2);
-            break;
-        case Cursor::SCROLL_E_X:
-            _ui = std::make_unique<UI::Image>("art/intrface/screx.frm");
-            _ui->setOffset(-_ui->size().width(), -_ui->size().height() / 2);
-            break;
-        case Cursor::SCROLL_NW:
-            _ui = std::make_unique<UI::Image>("art/intrface/scrnwest.frm");
-            break;
-        case Cursor::SCROLL_NW_X:
-            _ui = std::make_unique<UI::Image>("art/intrface/scrnwx.frm");
-            break;
-        case Cursor::SCROLL_SW:
-            _ui = std::make_unique<UI::Image>("art/intrface/scrswest.frm");
-            _ui->setOffset(0, -_ui->size().height());
-            break;
-        case Cursor::SCROLL_SW_X:
-            _ui = std::make_unique<UI::Image>("art/intrface/scrswx.frm");
-            _ui->setOffset(0, -_ui->size().height());
-            break;
-        case Cursor::SCROLL_NE:
-            _ui = std::make_unique<UI::Image>("art/intrface/scrneast.frm");
-            _ui->setOffset(-_ui->size().width(), 0);
-            break;
-        case Cursor::SCROLL_NE_X:
-            _ui = std::make_unique<UI::Image>("art/intrface/scrnex.frm");
-            _ui->setOffset(-_ui->size().width(), 0);
-            break;
-        case Cursor::SCROLL_SE:
-            _ui = std::make_unique<UI::Image>("art/intrface/scrseast.frm");
-            _ui->setOffset(-_ui->size().width(), -_ui->size().height());
-            break;
-        case Cursor::SCROLL_SE_X:
-            _ui = std::make_unique<UI::Image>("art/intrface/scrsex.frm");
-            _ui->setOffset(-_ui->size().width(), -_ui->size().height());
-            break;
-        case Cursor::HEXAGON_RED:
-            _ui = std::make_unique<UI::Image>("art/intrface/msef000.frm");
-            _ui->setOffset(- _ui->size().width() / 2, - _ui->size().height() / 2);
-            break;
-        case Cursor::ACTION:
-            _ui = std::make_unique<UI::Image>("art/intrface/actarrow.frm");
-            break;
-        case Cursor::HAND:
-            _ui = std::make_unique<UI::Image>("art/intrface/hand.frm");
-            break;
-        case Cursor::SMALL_DOWN_ARROW:
-            _ui = std::make_unique<UI::Image>("art/intrface/sdnarrow.frm");
-            _ui->setOffset(-5, -10);
-            break;
-        case Cursor::SMALL_UP_ARROW:
-            _ui = std::make_unique<UI::Image>("art/intrface/suparrow.frm");
-            _ui->setOffset(-5, 0);
-            break;
-        case Cursor::WAIT:
-        {
-            auto queue = std::make_unique<UI::AnimationQueue>();
-            queue->animations().push_back(std::make_unique<UI::Animation>("art/intrface/wait.frm"));
-            queue->setRepeat(true);
-            queue->start();
-            _ui = std::move(queue);
-            _ui->setOffset(Point() - _ui->size() / 2);
-            break;
-        }
-        case Cursor::NONE:
-            break;
-        default:
-            break;
+        cur->setOffset(0, -csize.y / 2);
+    }
+    else if (state == Cursor::SCROLL_W || state == Cursor::SCROLL_W_X) 
+    {
+        cur->setOffset(-csize.x / 2, 0);
+	}
+    else if (state == Cursor::SCROLL_S || state == Cursor::SCROLL_S_X) 
+    {
+        cur->setOffset(-csize.x / 2, -csize.y);
+    }
+    else if (state == Cursor::SCROLL_E || state == Cursor::SCROLL_E_X) 
+    {
+        cur->setOffset(-csize.x, -csize.y / 2);
+    }
+    else if (state == Cursor::SCROLL_SW || state == Cursor::SCROLL_SW_X) 
+    {
+        cur->setOffset(0, -csize.y);
+    }
+    else if (state == Cursor::SCROLL_SW || state == Cursor::SCROLL_SW_X) 
+    {
+        cur->setOffset(-csize.x, 0);
+    }
+    else if (state == Cursor::SCROLL_SE || state == Cursor::SCROLL_SE_X) 
+    {
+        cur->setOffset(-csize.x, -csize.y);
+    }
+    else if (state == Cursor::HEXAGON_RED) 
+    {
+        cur->setOffset(-csize.x / 2, -csize.y / 2);
+    }
+    else if (state == Cursor::SMALL_DOWN_ARROW) 
+    {
+        cur->setOffset(-5, -10);
+    }
+    else if (state == Cursor::SMALL_UP_ARROW) 
+    {
+        cur->setOffset(-5, 0);
+    }
+	else if (state == Cursor::WAIT)
+	{
+		cur->setOffset(VecI2() - csize / 2);
     }
 }
 
@@ -231,27 +199,22 @@ void Mouse::render()
 {
     if (state() == Cursor::NONE) return;
 
-    if (_ui)
+    if (state() != Cursor::HEXAGON_RED)
     {
-        if (state() != Cursor::HEXAGON_RED)
-        {
-            _ui->setPosition(position());
-        }
-        _ui->render();
+        _ui.find(state())->second->setPosition(position());
     }
+    _ui.find(state())->second->render();
 }
 
 void Mouse::think()
 {
-    SDL_GetMouseState(&_position.rx(), &_position.ry());
+    SDL_GetMouseState(&_position.x, &_position.y);
     _position = Point(
         static_cast<int>(_position.x() / Game::getInstance()->renderer()->scaleX()),
         static_cast<int>(_position.y() / Game::getInstance()->renderer()->scaleY())
     );
-    if (_ui)
-    {
-        _ui->think();
-    }
+    if (state() == Cursor::NONE)return;
+    _ui.find(state())->second->think();
 }
 
 bool Mouse::scrollState()
@@ -305,16 +268,13 @@ void Mouse::renderOutline()
 {
     if (state() == Cursor::NONE) return;
 
-    if (_ui)
-    {
-        if (state() != Cursor::HEXAGON_RED)
-        {
-            _ui->setPosition(position());
-        }
-        _ui->setOutline(1);
-        _ui->render();
-        _ui->setOutline(0);
+    auto vbase = _ui.find(state())->second.get();
+    if (state() != Cursor::HEXAGON_RED) {
+        vbase->setPosition(position());
     }
+    vbase->setOutline(1);
+    vbase->render();
+    vbase->setOutline(0);
 }
 }
 }
