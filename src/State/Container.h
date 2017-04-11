@@ -47,7 +47,7 @@ namespace Falltergeist
                 ~Container() override;
 
                 void init() override;
-				virtual void think() override;
+                void think() override;
                 Game::ContainerItemObject* object();
                 void setObject(Game::ContainerItemObject* object);
 
