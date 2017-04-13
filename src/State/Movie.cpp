@@ -149,6 +149,11 @@ namespace Falltergeist
                 _effect_index++;
             }
 
+            if (Kb.AnyKey())
+            {
+                this->onVideoFinished();
+            }
+
             if (!_started)
             {
                 Game::getInstance()->mixer()->playMovieMusic(dynamic_cast<UI::MvePlayer*>(getUI("movie")));
@@ -166,14 +171,6 @@ namespace Falltergeist
             if (auto mouseEvent = dynamic_cast<Event::Mouse*>(event))
             {
                 if (mouseEvent->name() == "mouseup")
-                {
-                    this->onVideoFinished();
-                }
-            }
-
-            if (auto keyboardEvent = dynamic_cast<Event::Keyboard*>(event))
-            {
-                if (keyboardEvent->name() == "keyup")
                 {
                     this->onVideoFinished();
                 }

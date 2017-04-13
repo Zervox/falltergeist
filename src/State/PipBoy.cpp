@@ -117,17 +117,18 @@ namespace Falltergeist
             addUI(closeButton);
         }
 
-        void PipBoy::onCloseButtonClick(Event::Mouse* event)
+        void PipBoy::think() 
         {
-            Game::getInstance()->popState();
-        }
-
-        void PipBoy::onKeyDown(Event::Keyboard* event)
-        {
-            if (event->keyCode() == SDLK_ESCAPE)
+            State::think();
+            if (Kb.bp(SDLK_ESCAPE) || Kb.bp(SDLK_p)) 
             {
                 Game::getInstance()->popState();
             }
+       }
+
+        void PipBoy::onCloseButtonClick(Event::Mouse* event)
+        {
+            Game::getInstance()->popState();
         }
     }
 }

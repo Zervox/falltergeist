@@ -432,6 +432,31 @@ namespace Falltergeist
                 }
             }
 
+            if (Kb.bp(SDLK_ESCAPE) || Kb.bp(SDLK_c))
+            {
+                doBack();
+            }
+            if (Kb.bp(SDLK_RETURN) || Kb.bp(SDLK_d))
+            {
+                doDone();
+            }
+            if (Kb.bp(SDLK_o))
+            {
+                doOptions();
+            }
+            if (Kb.bp(SDLK_a))
+            {
+                doAge();
+            }
+            if (Kb.bp(SDLK_s))
+            {
+                doGender();
+            }
+            if (Kb.bp(SDLK_n))
+            {
+                doName();
+            }
+
         }
 
         bool PlayerCreate::_statDecrease(unsigned int num)
@@ -663,33 +688,6 @@ namespace Falltergeist
         void PlayerCreate::doOptions()
         {
             Game::getInstance()->pushState(new PlayerCreateOptions());
-        }
-
-        void PlayerCreate::onKeyDown(Event::Keyboard* event)
-        {
-            switch (event->keyCode())
-            {
-                case SDLK_ESCAPE:
-                case SDLK_c:
-                    doBack();
-                    break;
-                case SDLK_RETURN:
-                case SDLK_d:
-                    doDone();
-                    break;
-                case SDLK_o:
-                    doOptions();
-                    break;
-                case SDLK_a:
-                    doAge();
-                    break;
-                case SDLK_s:
-                    doGender();
-                    break;
-                case SDLK_n:
-                    doName();
-                    break;
-            }
         }
 
         void PlayerCreate::render()

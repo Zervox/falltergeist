@@ -384,6 +384,14 @@ namespace Falltergeist
         void SettingsMenu::think()
         {
             State::think();
+            if (Kb.bp(SDLK_ESCAPE)) 
+            {
+                doCancel();
+            }
+            if (Kb.bp(SDLK_RETURN)) 
+            {
+                doSave();
+            }
         }
 
         //IniFileSection SettingsMenu::_getSettings()
@@ -477,19 +485,6 @@ namespace Falltergeist
 
         void SettingsMenu::onDefaultButtonClick(Event::Mouse* event)
         {
-        }
-
-        void SettingsMenu::onKeyDown(Event::Keyboard* event)
-        {
-            switch (event->keyCode())
-            {
-                case SDLK_ESCAPE:
-                    doCancel();
-                    break;
-                case SDLK_RETURN:
-                    doSave();
-                    break;
-            }
         }
 
         void SettingsMenu::onStateActivate(Event::State* event)

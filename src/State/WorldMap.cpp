@@ -107,6 +107,15 @@ namespace Falltergeist
             }
         }
 
+        void WorldMap::think() 
+        {
+            State::think();
+            if (Kb.bp(SDLK_ESCAPE))
+            {
+                Game::getInstance()->popState();
+            }
+        }
+
         void WorldMap::render()
         {
             // calculating render size, screen size, etc
@@ -226,17 +235,6 @@ namespace Falltergeist
         void WorldMap::onStateDeactivate(Event::State* event)
         {
             Game::getInstance()->mouse()->popState();
-        }
-
-        void WorldMap::onKeyDown(Event::Keyboard* event)
-        {
-            switch (event->keyCode())
-            {
-                case SDLK_ESCAPE:
-                {
-                    Game::getInstance()->popState();
-                }
-            }
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Falltergeist
                 ~GameMenu() override;
 
                 void init() override;
-				void think() override;
+                void think() override;
 
                 void doSaveGame();
                 void doLoadGame();

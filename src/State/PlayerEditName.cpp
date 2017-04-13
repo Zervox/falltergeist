@@ -40,6 +40,15 @@ namespace Falltergeist
 {
     namespace State
     {
+        std::map<char, char> PlayerEditName::_keyCodes = {
+            { SDLK_a, 'a' },{ SDLK_b, 'b' },{ SDLK_c, 'c' },{ SDLK_d, 'd' },{ SDLK_e, 'e' },{ SDLK_f, 'f' },{ SDLK_g, 'g' },{ SDLK_h, 'h' },{ SDLK_i, 'i' },{ SDLK_j, 'j' },
+            { SDLK_k, 'k' },{ SDLK_l, 'l' },{ SDLK_m, 'm' },{ SDLK_n, 'n' },{ SDLK_o, 'o' },{ SDLK_p, 'p' },{ SDLK_q, 'q' },{ SDLK_r, 'r' },{ SDLK_s, 's' },{ SDLK_t, 't' },
+            { SDLK_u, 'u' },{ SDLK_v, 'v' },{ SDLK_w, 'w' },{ SDLK_x, 'x' },{ SDLK_y, 'y' },{ SDLK_z, 'z' },{ SDLK_1, '1' },{ SDLK_2, '2' },{ SDLK_3, '3' },{ SDLK_4, '4' },
+            { SDLK_5, '5' },{ SDLK_6, '6' },{ SDLK_7, '7' },{ SDLK_8, '8' },{ SDLK_9, '9' },{ SDLK_0, '0' },{ SDLK_KP_1, '1' },{ SDLK_KP_2, '2' },{ SDLK_KP_3, '3' },{ SDLK_KP_4, '4' },
+            { SDLK_KP_5, '5' },{ SDLK_KP_6, '6' },{ SDLK_KP_7, '7' },{ SDLK_KP_8, '8' },{ SDLK_KP_9, '9' },{ SDLK_KP_0, '0' },
+        };
+
+
         PlayerEditName::PlayerEditName() : State()
         {
         }
@@ -60,43 +69,6 @@ namespace Falltergeist
             int bgX = bgPos.x();
             int bgY = bgPos.y();
 
-            _keyCodes.insert(std::make_pair(SDLK_a, 'a'));
-            _keyCodes.insert(std::make_pair(SDLK_b, 'b'));
-            _keyCodes.insert(std::make_pair(SDLK_c, 'c'));
-            _keyCodes.insert(std::make_pair(SDLK_d, 'd'));
-            _keyCodes.insert(std::make_pair(SDLK_e, 'e'));
-            _keyCodes.insert(std::make_pair(SDLK_f, 'f'));
-            _keyCodes.insert(std::make_pair(SDLK_g, 'g'));
-            _keyCodes.insert(std::make_pair(SDLK_h, 'h'));
-            _keyCodes.insert(std::make_pair(SDLK_i, 'i'));
-            _keyCodes.insert(std::make_pair(SDLK_j, 'j'));
-            _keyCodes.insert(std::make_pair(SDLK_k, 'k'));
-            _keyCodes.insert(std::make_pair(SDLK_l, 'l'));
-            _keyCodes.insert(std::make_pair(SDLK_m, 'm'));
-            _keyCodes.insert(std::make_pair(SDLK_n, 'n'));
-            _keyCodes.insert(std::make_pair(SDLK_o, 'o'));
-            _keyCodes.insert(std::make_pair(SDLK_p, 'p'));
-            _keyCodes.insert(std::make_pair(SDLK_q, 'q'));
-            _keyCodes.insert(std::make_pair(SDLK_r, 'r'));
-            _keyCodes.insert(std::make_pair(SDLK_s, 's'));
-            _keyCodes.insert(std::make_pair(SDLK_t, 't'));
-            _keyCodes.insert(std::make_pair(SDLK_u, 'u'));
-            _keyCodes.insert(std::make_pair(SDLK_v, 'v'));
-            _keyCodes.insert(std::make_pair(SDLK_w, 'w'));
-            _keyCodes.insert(std::make_pair(SDLK_x, 'x'));
-            _keyCodes.insert(std::make_pair(SDLK_y, 'y'));
-            _keyCodes.insert(std::make_pair(SDLK_z, 'z'));
-            _keyCodes.insert(std::make_pair(SDLK_1, '1'));
-            _keyCodes.insert(std::make_pair(SDLK_2, '2'));
-            _keyCodes.insert(std::make_pair(SDLK_3, '3'));
-            _keyCodes.insert(std::make_pair(SDLK_4, '4'));
-            _keyCodes.insert(std::make_pair(SDLK_5, '5'));
-            _keyCodes.insert(std::make_pair(SDLK_6, '6'));
-            _keyCodes.insert(std::make_pair(SDLK_7, '7'));
-            _keyCodes.insert(std::make_pair(SDLK_8, '8'));
-            _keyCodes.insert(std::make_pair(SDLK_9, '9'));
-            _keyCodes.insert(std::make_pair(SDLK_0, '0'));
-
             _timer = SDL_GetTicks();
 
             auto bg = new UI::Image("art/intrface/charwin.frm");
@@ -115,7 +87,6 @@ namespace Falltergeist
             doneButton->mouseClickHandler().add(std::bind(&PlayerEditName::onDoneButtonClick, this, std::placeholders::_1));
 
             _name = new UI::TextArea(Game::getInstance()->player()->name(), bgX+43, bgY+15);
-            _name->keyDownHandler().add([this](Event::Event* event){ this->onTextAreaKeyDown(dynamic_cast<Event::Keyboard*>(event)); });
 
             _cursor = new UI::Rectangle(bgPos + Point(83, 15) ,{5,8}, {0x3F, 0xF8, 0x00, 0xFF});
 
@@ -128,55 +99,36 @@ namespace Falltergeist
             addUI(_cursor);
         }
 
-        void PlayerEditName::onTextAreaKeyDown(Event::Keyboard* event)
+        void PlayerEditName::onTextAreaKeyDown()
         {
-            auto sender = dynamic_cast<UI::TextArea*>(event->target());
+            std::string text = _name->text();
 
-            std::string text = sender->text();
-
-            if (event->keyCode() == SDLK_BACKSPACE) //backspace
+            if (Kb.bp(SDLK_BACKSPACE)) 
             {
                 if (text.length() > 0)
                 {
                     text = text.substr(0, text.length() - 1);
-                    sender->setText(text.c_str());
+                    _name->setText(text.c_str());
                     return;
                 }
                 return;
             }
-
-            if (event->keyCode() == SDLK_RETURN) //enter
-            {
-                doDone();
-                return;
-            }
-
-            if (event->keyCode() == SDLK_ESCAPE)
-            {
-                doBack();
-                return;
-            }
-
-            if (event->keyCode() == SDLK_LSHIFT || event->keyCode() == SDLK_RSHIFT) return;
-            if (event->keyCode() == SDLK_LCTRL || event->keyCode() == SDLK_RCTRL) return;
-            if (event->keyCode() == SDLK_LALT || event->keyCode() == SDLK_RALT) return;
+            if (Kb.bp(SDLK_RETURN)) {doDone();return;}
+            if (Kb.bp(SDLK_ESCAPE)) {doBack();}
+            if (Kb.bp(SDLK_LCTRL) || Kb.bp(SDLK_RCTRL)) {return;}
+            if (Kb.bp(SDLK_LALT) || Kb.bp(SDLK_RALT)) {return;}
 
             if (text.length() == 11) return;
 
-            if (_keyCodes.find(event->keyCode()) != _keyCodes.end())
-            {
-                char chr = _keyCodes.at(event->keyCode());
+            for (auto v : _keyCodes) 
+           {
+                if (Kb.bp(v.first)) 
+                {
+                    text += (Kb.b(SDLK_LSHIFT) ? toupper(v.second) : v.second);
+                    _name->setText(text.c_str());
+                }
+           }
 
-                if (event->shiftPressed())
-                {
-                    text += toupper(chr);
-                }
-                else
-                {
-                    text += chr;
-                }
-                sender->setText(text.c_str());
-            }
         }
 
         void PlayerEditName::onDoneButtonClick(Event::Mouse* event)
@@ -194,6 +146,10 @@ namespace Falltergeist
                 _timer = SDL_GetTicks();
             }
             _cursor->setPosition({bgX + _name->textSize().width() + 45, _cursor->position().y()});
+            if (Kb.AnyKey()) 
+            {
+                onTextAreaKeyDown();
+            }
         }
 
         void PlayerEditName::doBack()

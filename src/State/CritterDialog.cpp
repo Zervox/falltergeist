@@ -48,10 +48,10 @@ namespace Falltergeist
 {
     namespace State
     {
-       static std::map<uint32_t, uint32_t> numkeys = {
+        std::map<uint32_t, uint32_t> CritterDialog::_numkeys = {
             { SDLK_1,0 },{ SDLK_2, 1 },{ SDLK_3, 2 },{ SDLK_4, 3 },{ SDLK_5, 4 } ,{ SDLK_6, 5 },{ SDLK_7, 6 } ,{ SDLK_8, 7 } ,{ SDLK_9, 8 } ,
             { SDLK_KP_1,0 },{ SDLK_KP_2, 1 },{ SDLK_KP_3, 2 },{ SDLK_KP_4, 3 },{ SDLK_KP_5, 4 } ,{ SDLK_KP_6, 5 },{ SDLK_KP_7, 6 } ,{ SDLK_KP_8, 7 } ,{ SDLK_KP_9, 8 }
-       };
+        };
 
         CritterDialog::CritterDialog() : State()
         {
@@ -138,7 +138,7 @@ namespace Falltergeist
                 // Todo: end dialog
                 return;
             }
-            for (auto v : numkeys) 
+            for (auto v : _numkeys) 
             {
                 if (Kb.bp(v.first)) 
                 {

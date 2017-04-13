@@ -66,7 +66,6 @@ namespace Falltergeist
                 void doOptions();
                 void doDone();
                 void doBack();
-                void onKeyDown(Event::Keyboard* event) override;
 
         protected:
             UI::TextArea* _selectedLabel = nullptr;

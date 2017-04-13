@@ -63,7 +63,6 @@ namespace Falltergeist
 
                 void onStateActivate(Event::State* event) override;
                 void onStateDeactivate(Event::State* event) override;
-                void onKeyDown(Event::Keyboard* event) override;
 
             protected:
                 UI::TextArea* _selectedLabel = nullptr;

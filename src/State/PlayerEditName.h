@@ -46,8 +46,6 @@ namespace Falltergeist
                 void init() override;
                 void think() override;
 
-                void onDoneButtonClick(Event::Mouse* event);
-                void onTextAreaKeyDown(Event::Keyboard* event);
 
                 void doDone();
                 void doBack();
@@ -56,7 +54,7 @@ namespace Falltergeist
                 unsigned int _timer;
                 UI::TextArea* _name = nullptr;
                 UI::Rectangle* _cursor = nullptr;
-                std::map<char,char> _keyCodes;
+                static std::map<char,char> _keyCodes;
         };
     }
 }

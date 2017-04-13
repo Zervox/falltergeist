@@ -36,9 +36,10 @@ namespace Falltergeist
                 ~PipBoy() override;
 
                 void init() override;
+                void think() override;
 
                 void onCloseButtonClick(Event::Mouse* event);
-                void onKeyDown(Event::Keyboard* event) override;
+
         };
     }
 }

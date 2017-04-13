@@ -127,6 +127,15 @@ namespace Falltergeist
             addUI(doneButtonLabel);
         }
 
+        void PlayerCreateOptions::think()
+        {
+            State::think();
+            if (Kb.bp(SDLK_ESCAPE) || Kb.bp(SDLK_RETURN) || Kb.bp(SDLK_d)) 
+            {
+                Game::getInstance()->popState();
+            }
+        }
+
         void PlayerCreateOptions::onSaveButtonClick(Event::Mouse* event)
         {
         //    Game::getInstance()->pushState(new SavePlayerStatState());
@@ -150,18 +159,6 @@ namespace Falltergeist
         void PlayerCreateOptions::onDoneButtonClick(Event::Mouse* event)
         {
             Game::getInstance()->popState();
-        }
-
-        void PlayerCreateOptions::onKeyDown(Event::Keyboard* event)
-        {
-            switch (event->keyCode())
-            {
-                case SDLK_ESCAPE:
-                case SDLK_RETURN:
-                case SDLK_d:
-                    Game::getInstance()->popState();
-                    break;
-            }
         }
     }
 }

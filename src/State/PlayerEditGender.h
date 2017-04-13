@@ -43,11 +43,11 @@ namespace Falltergeist
                 ~PlayerEditGender() override;
 
                 void init() override;
+                void think() override;
 
                 void onFemaleButtonPress(Event::Mouse* event);
                 void onMaleButtonPress(Event::Mouse* event);
                 void onDoneButtonClick(Event::Mouse* event);
-                void onKeyDown(Event::Keyboard* event) override;
                 void setGender(GENDER gender);
 
             protected:

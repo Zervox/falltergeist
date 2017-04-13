@@ -108,11 +108,6 @@ namespace Falltergeist
             addUI("stats3_values", new UI::TextArea(383, 150));
         }
 
-        void NewGame::think()
-        {
-            State::think();
-        }
-
         void NewGame::doBeginGame()
         {
             Game::getInstance()->setPlayer(std::move(_characters.at(_selectedCharacter)));
@@ -245,6 +240,31 @@ namespace Falltergeist
             getTextArea("stats3_values")->setText(stats3_values);
         }
 
+        void NewGame::think()
+        {
+            State::think();
+            if (Kb.bp(SDLK_ESCAPE) || Kb.bp(SDLK_b)) 
+            {
+                doBack();
+            }
+            if (Kb.bp(SDLK_t)) 
+            {
+                doBeginGame();
+            }
+            if (Kb.bp(SDLK_c)) 
+            {
+                doCreate();
+            }
+            if (Kb.b(SDLK_LEFT)) 
+            {
+                doPrev();
+            }
+            if (Kb.b(SDLK_RIGHT)) 
+            {
+                doNext();
+            }
+        }
+
         void NewGame::onEditButtonClick(Event::Mouse* event)
         {
             doEdit();
@@ -258,32 +278,6 @@ namespace Falltergeist
         void NewGame::onBeginGameButtonClick(Event::Mouse* event)
         {
             doBeginGame();
-        }
-
-        void NewGame::onKeyDown(Event::Keyboard* event)
-        {
-            switch (event->keyCode())
-            {
-                case SDLK_ESCAPE:
-                case SDLK_b:
-                    doBack();
-                    break;
-                case SDLK_t:
-                    doBeginGame();
-                    break;
-                case SDLK_c:
-                    doCreate();
-                    break;
-                case SDLK_m:
-                    doEdit();
-                    break;
-                case SDLK_LEFT:
-                    doPrev();
-                    break;
-                case SDLK_RIGHT:
-                    doNext();
-                    break;
-            }
         }
 
         void NewGame::onStateActivate(Event::State* event)

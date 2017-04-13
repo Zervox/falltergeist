@@ -142,6 +142,35 @@ namespace Falltergeist
             addUI(exitButtonLabel);
         }
 
+        void MainMenu::think() 
+        {
+            State::think();
+            if (Kb.bp(SDLK_ESCAPE) || Kb.bp(SDLK_e)) 
+            {
+                doExit();
+            }
+            if (Kb.bp(SDLK_n)) 
+            {
+                doNewGame();
+            }
+            if (Kb.bp(SDLK_l)) 
+            {
+                doLoadGame();
+            }
+            if (Kb.bp(SDLK_i)) 
+            {
+                doIntro();
+            }
+            if (Kb.bp(SDLK_c)) 
+            {
+                doCredits();
+            }
+            if (Kb.bp(SDLK_o)) 
+            {
+                doSettings();
+            }
+        }
+
         void MainMenu::doExit()
         {
             fadeDoneHandler().clear();
@@ -244,31 +273,6 @@ namespace Falltergeist
             Game::getInstance()->pushState(new Credits());
         }
 
-        void MainMenu::onKeyDown(Event::Keyboard* event)
-        {
-            switch (event->keyCode())
-            {
-                case SDLK_e:
-                case SDLK_ESCAPE:
-                    doExit();
-                    break;
-                case SDLK_n:
-                    doNewGame();
-                    break;
-                case SDLK_l:
-                    doLoadGame();
-                    break;
-                case SDLK_i:
-                    doIntro();
-                    break;
-                case SDLK_c:
-                    doCredits();
-                    break;
-                case SDLK_o:
-                    doSettings();
-                    break;
-            }
-        }
 
         void MainMenu::onStateActivate(Event::State* event)
         {

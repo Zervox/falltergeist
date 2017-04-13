@@ -59,7 +59,6 @@ namespace Falltergeist
                 void doBack();
                 void doNext();
                 void doPrev();
-                void onKeyDown(Event::Keyboard* event) override;
 
             protected:
                 unsigned char _selectedCharacter = 0;

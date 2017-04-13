@@ -42,6 +42,7 @@ namespace Falltergeist
                 ~PlayerEditAge() override;
 
                 void init() override;
+                void think() override;
 
                 void onIncButtonClick(Event::Mouse* event);
                 void onDecButtonClick(Event::Mouse* event);
@@ -50,7 +51,6 @@ namespace Falltergeist
                 void doDec();
                 void doDone();
                 void doBack();
-                void onKeyDown(Event::Keyboard* event) override;
 
             protected:
                 UI::BigCounter* _counter = nullptr;

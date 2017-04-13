@@ -38,13 +38,13 @@ namespace Falltergeist
                 ~PlayerCreateOptions() override;
 
                 void init() override;
+                void think() override;
 
                 void onSaveButtonClick(Event::Mouse* event);
                 void onLoadButtonClick(Event::Mouse* event);
                 void onPrintToFileButtonClick(Event::Mouse* event);
                 void onEraseButtonClick(Event::Mouse* event);
                 void onDoneButtonClick(Event::Mouse* event);
-                void onKeyDown(Event::Keyboard* event) override;
         };
     }
 }

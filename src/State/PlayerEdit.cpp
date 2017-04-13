@@ -455,6 +455,18 @@ namespace Falltergeist
                 }
             }
 
+            if (Kb.bp(SDLK_ESCAPE) || Kb.bp(SDLK_c))
+            {
+                doCancel();
+            }
+            if (Kb.bp(SDLK_RETURN) || Kb.bp(SDLK_d))
+            {
+                doDone();
+            }
+            if (Kb.bp(SDLK_p))
+            {
+                doPrint();
+            }
         }
 
         void PlayerEdit::onButtonClick(Event::Mouse* event)
@@ -539,24 +551,6 @@ namespace Falltergeist
         void PlayerEdit::onStateDeactivate(Event::State* event)
         {
             Game::getInstance()->mouse()->popState();
-        }
-
-        void PlayerEdit::onKeyDown(Event::Keyboard* event)
-        {
-            switch (event->keyCode())
-            {
-                case SDLK_ESCAPE:
-                case SDLK_c:
-                    doCancel();
-                    break;
-                case SDLK_RETURN:
-                case SDLK_d:
-                    doDone();
-                    break;
-                case SDLK_p:
-                    doPrint();
-                    break;
-            }
         }
 
         void PlayerEdit::render()

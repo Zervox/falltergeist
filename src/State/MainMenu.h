@@ -39,6 +39,7 @@ namespace Falltergeist
                 ~MainMenu() override;
 
                 void init() override;
+                void think() override;
 
                 void onExitButtonClick(Event::Mouse* event);
                 void onNewGameButtonClick(Event::Mouse* event);

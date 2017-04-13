@@ -95,6 +95,27 @@ namespace Falltergeist
 
         }
 
+        void PlayerEditAge::think() 
+        {
+            State::think();
+            if (Kb.bp(SDLK_ESCAPE)) 
+            {
+                doBack();
+            }
+            if (Kb.bp(SDLK_RETURN))
+            {
+                doDone();
+            }
+            if (Kb.bp(SDLK_LEFT))
+            {
+                doDec();
+            }
+            if (Kb.bp(SDLK_RIGHT)) 
+            {
+                doInc();
+            }
+        }
+
         void PlayerEditAge::onDecButtonClick(Event::Mouse* event)
         {
             doDec();
@@ -138,25 +159,6 @@ namespace Falltergeist
             {
                 age++;
                 _counter->setNumber(age);
-            }
-        }
-
-        void PlayerEditAge::onKeyDown(Event::Keyboard* event)
-        {
-            switch (event->keyCode())
-            {
-                case SDLK_RIGHT:
-                    doInc();
-                    break;
-                case SDLK_LEFT:
-                    doDec();
-                    break;
-                case SDLK_ESCAPE:
-                    doBack();
-                    break;
-                case SDLK_RETURN:
-                    doDone();
-                    break;
             }
         }
     }

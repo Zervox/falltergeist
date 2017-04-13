@@ -92,6 +92,24 @@ namespace Falltergeist
             setGender(Game::getInstance()->player()->gender());
         }
 
+        void PlayerEditGender::think()
+        {
+            State::think();
+            if (Kb.bp(SDLK_ESCAPE)) 
+            {
+                Game::getInstance()->popState();
+            }
+            if (Kb.bp(SDLK_RETURN)) 
+            {
+                Game::getInstance()->player()->setGender(_gender);
+                Game::getInstance()->popState();
+            }
+            if (Kb.bp(SDLK_LEFT) || Kb.bp(SDLK_RIGHT)) 
+            {
+                setGender(_gender);
+            }
+        }
+
         void PlayerEditGender::onDoneButtonClick(Event::Mouse* event)
         {
             Game::getInstance()->player()->setGender(_gender);
@@ -106,24 +124,6 @@ namespace Falltergeist
         void PlayerEditGender::onMaleButtonPress(Event::Mouse* event)
         {
             setGender(GENDER::MALE);
-        }
-
-        void PlayerEditGender::onKeyDown(Event::Keyboard* event)
-        {
-            switch (event->keyCode())
-            {
-                case SDLK_ESCAPE:
-                    Game::getInstance()->popState();
-                    break;
-                case SDLK_RETURN:
-                    Game::getInstance()->player()->setGender(_gender);
-                    Game::getInstance()->popState();
-                    break;
-                case SDLK_LEFT:
-                case SDLK_RIGHT:
-                    setGender(_gender);
-                    break;
-            }
         }
 
         void PlayerEditGender::setGender(GENDER gender)

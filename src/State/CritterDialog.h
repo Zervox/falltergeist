@@ -33,7 +33,6 @@ namespace Falltergeist
     namespace Event
     {
         class Event;
-        class Keyboard;
     }
     namespace UI
     {
@@ -65,6 +64,7 @@ namespace Falltergeist
                 void onAnswerClick(Event::Mouse* event);
 
             protected:
+                static std::map<uint32_t, uint32_t> _numkeys;
                 std::vector<int> _functions;
                 std::vector<int> _reactions;
                 std::vector<UI::TextArea*> _answers;
