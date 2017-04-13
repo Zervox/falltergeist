@@ -149,50 +149,30 @@ void Mouse::_setType(Cursor state)
     if (this->state() == state || state == Cursor::NONE) return;
     auto cur = _ui.find(state)->second.get();
     auto csize = cur->size();
-    if (state == Cursor::SCROLL_W || state == Cursor::SCROLL_W_X) 
-    {
-        cur->setOffset(0, -csize.height() / 2);
+    Point p;
+
+    if (state == Cursor::SCROLL_E || state == Cursor::SCROLL_E_X || state == Cursor::SCROLL_NE || state == Cursor::SCROLL_NE_X || state == Cursor::SCROLL_SE || state == Cursor::SCROLL_SE_X) {
+        p.setX( -csize.x);
     }
-    else if (state == Cursor::SCROLL_N || state == Cursor::SCROLL_N_X) 
-    {
-        cur->setOffset(-csize.width() / 2, 0);
-	}
-    else if (state == Cursor::SCROLL_S || state == Cursor::SCROLL_S_X) 
-    {
-        cur->setOffset(-csize.width() / 2, -csize.height());
+    else if (state == Cursor::SCROLL_N || state == Cursor::SCROLL_N_X || state == Cursor::SCROLL_S || state == Cursor::SCROLL_S_X || state == Cursor::HEXAGON_RED || state == Cursor::WAIT) {
+		p.setX(-csize.x / 2);
     }
-    else if (state == Cursor::SCROLL_E || state == Cursor::SCROLL_E_X) 
-    {
-        cur->setOffset(-csize.width(), -csize.height() / 2);
+
+    if (state == Cursor::SCROLL_S || state == Cursor::SCROLL_S_X || state == Cursor::SCROLL_SW || state == Cursor::SCROLL_SW_X || state == Cursor::SCROLL_SE || state == Cursor::SCROLL_SE_X) {
+		p.setY( -csize.y);
     }
-    else if (state == Cursor::SCROLL_SW || state == Cursor::SCROLL_SW_X) 
-    {
-        cur->setOffset(0, -csize.height());
+    else if (state == Cursor::SCROLL_W || state == Cursor::SCROLL_W_X || state == Cursor::SCROLL_E || state == Cursor::SCROLL_E_X || state == Cursor::HEXAGON_RED || state == Cursor::WAIT) {
+		p.setY(-csize.y / 2);
     }
-    else if (state == Cursor::SCROLL_NE || state == Cursor::SCROLL_NE_X) 
-    {
-        cur->setOffset(-csize.width(), 0);
+
+    if (state == Cursor::SMALL_DOWN_ARROW) {
+		p.setX(-5);
+		p.setY(-10);
     }
-    else if (state == Cursor::SCROLL_SE || state == Cursor::SCROLL_SE_X) 
-    {
-        cur->setOffset(-csize.width(), -csize.height());
+    else if (state == Cursor::SMALL_UP_ARROW) {
+		p.setX(-5);
     }
-    else if (state == Cursor::HEXAGON_RED) 
-    {
-        cur->setOffset(-csize.width() / 2, -csize.height() / 2);
-    }
-    else if (state == Cursor::SMALL_DOWN_ARROW) 
-    {
-        cur->setOffset(-5, -10);
-    }
-    else if (state == Cursor::SMALL_UP_ARROW) 
-    {
-        cur->setOffset(-5, 0);
-    }
-	else if (state == Cursor::WAIT)
-	{
-		cur->setOffset(Point() - csize / 2);
-    }
+    cur->setOffset(p);
 }
 
 void Mouse::render()
