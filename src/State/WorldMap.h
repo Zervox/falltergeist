@@ -45,7 +45,7 @@ namespace Falltergeist
                 ~WorldMap() override;
 
                 void init() override;
-				void think() override;
+                void think() override;
                 void render() override;
                 void handle(Event::Event* event) override;
                 void onStateActivate(Event::State* event) override;

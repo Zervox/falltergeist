@@ -38,7 +38,7 @@ namespace Falltergeist
                 ~SaveGame() override;
 
                 void init() override;
-				void think() override;
+                void think() override;
 
                 void onDoneButtonClick(Event::Mouse* event);
                 void onCancelButtonClick(Event::Mouse* event);
